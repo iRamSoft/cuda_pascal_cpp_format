@@ -34,9 +34,8 @@ def _format_source_code(source_text):
         file_name = fx.name
         fx.close()
         
-        f = open(file_name, 'w')
-        f.write(s)                              
-        f.close()
+        with open(file_name, 'w') as f:
+            f.write(s)
     
         if ed.get_prop(PROP_LEXER_CARET, '').lower() == 'c++':
           rad_opt = '-cpp'
@@ -54,12 +53,10 @@ def _format_source_code(source_text):
             msg_status('Pascal/C++ Format: {}'.format(err))
         else:    
             msg_status('Pascal/C++ Format: {} {}'.format(ed.get_filename(), 'formated'))
-            f = open(file_name, 'r')
-            s = f.read()
-            f.close()
+        
+        with open(file_name, 'r') as f:
+            s = f.read().replace('\n', '\r\n')
 
-            s = s.replace('\n', '\r\n')        
-    
         os.remove(file_name)
     
         return s
