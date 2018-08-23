@@ -37,7 +37,7 @@ def _format_source_code(source_text):
         with open(file_name, 'w') as f:
             f.write(s)
     
-        if ed.get_prop(PROP_LEXER_CARET, '').lower() == 'c++':
+        if ed.get_prop(PROP_LEXER_FILE, '').lower() == 'c++':
           rad_opt = '-cpp'
         else:
           rad_opt = '-delphi' 
@@ -64,7 +64,7 @@ def _format_source_code(source_text):
         raise    
     
 def _checks():
-    if not _check_lexer(ed.get_prop(PROP_LEXER_CARET, '')):
+    if not _check_lexer(ed.get_prop(PROP_LEXER_FILE, '')):
         msg_status('Pascal/C++ Format: support only Pascal and C++ lexer')
         return False
         
@@ -83,7 +83,7 @@ class Command:
         try:
             carets = ed.get_carets()
             if len(carets)!=1: 
-                msg_status('Pascal Format: multi-carets not supported')
+                msg_status('Pascal/C++ Format: multi-carets not supported')
                 return
                 
             x0, y0, x1, y1 = carets[0]
@@ -93,7 +93,7 @@ class Command:
             s = _format_source_code(ed.get_text_substr(x0, y0, x1, y1))
 
             if not s:
-                msg_status("BSScript Format: Cannot format text")
+                msg_status("Pascal/C++ Format: Cannot format text")
                 return
 
             ed.set_caret(x0, y0)
@@ -111,7 +111,7 @@ class Command:
             s = _format_source_code(s)
             
             if not s:
-                msg_status("BSScript Format: Cannot format text")
+                msg_status("Pascal/C++ Format: Cannot format text")
                 return
             
             ed.set_caret(0, 0)
