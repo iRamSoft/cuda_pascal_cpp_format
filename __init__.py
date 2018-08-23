@@ -95,19 +95,30 @@ class Command:
             
             s = _format_source_code(ed.get_text_substr(x0, y0, x1, y1))
 
-            ed.replace(x0, y0, x1, y1, s)
-            ed.set_sel_rect(0, 0, 0, 0) 
+            if not s:
+                msg_status("BSScript Format: Cannot format text")
+                return
+
+            ed.set_caret(x0, y0)
+            ed.delete(x0, y0, x1, y1)
+            ed.insert(x0, y0, s)
+
         except:
             raise
 
     def format_full(self):
         if not _checks(): return
-            
         try:
             s = ed.get_text_all()
             alllen = len(s)
             s = _format_source_code(s)
-            ed.replace(0, 0, 0, ed.get_line_count()+1, s)            
+            
+            if not s:
+                msg_status("BSScript Format: Cannot format text")
+                return
+            
+            ed.set_caret(0, 0)
+            ed.set_text_all(s)           
         except:
             raise
             
