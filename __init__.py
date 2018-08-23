@@ -12,8 +12,6 @@ if os.path.isfile(ini0) and not os.path.isfile(ini):
 
 #-------options
 opt_formater_dir = ini_read(ini, 'op', 'formater_directory', '')
-#-----constants
-option_lexers = 'pascal,c++'
 #--------------   
 
 def _getFormaterPath():
@@ -21,10 +19,6 @@ def _getFormaterPath():
 
 def _getConfigFileName():
     return os.path.join(opt_formater_dir,'formatter.config')
-
-def _check_lexer(lex):
-    if not lex: lex='-'
-    return ','+lex.lower()+',' in ','+option_lexers.lower()+','
 
 def _format_source_code(source_text):
     try:
@@ -64,10 +58,6 @@ def _format_source_code(source_text):
         raise    
     
 def _checks():
-    if not _check_lexer(ed.get_prop(PROP_LEXER_FILE, '')):
-        msg_status('Pascal/C++ Format: support only Pascal and C++ lexer')
-        return False
-        
     if not os.path.isfile(_getFormaterPath()):
         if msg_box('Path parameters for "formatter.exe" are not specified.\r\nOpen the settings file?', \
             MB_OKCANCEL+MB_ICONQUESTION) == ID_OK:

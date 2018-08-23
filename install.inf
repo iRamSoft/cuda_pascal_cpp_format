@@ -9,11 +9,13 @@ homepage=https://github.com/iRamSoft/cuda_pascal_cpp_format
 section=commands
 caption=Pascal/C++ Format\Formatting the selection
 method=format_selected
+lexers=Pascal,C++
 
 [item2]
 section=commands
 caption=Pascal/C++ Format\Formatting file
 method=format_full
+lexers=Pascal,C++
 
 [item3]
 section=commands
